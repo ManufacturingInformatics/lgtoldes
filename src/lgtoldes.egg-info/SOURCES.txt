@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/lgtoldes/__init__.py
+src/lgtoldes/module_demo.py
+src/lgtoldes.egg-info/PKG-INFO
+src/lgtoldes.egg-info/SOURCES.txt
+src/lgtoldes.egg-info/dependency_links.txt
+src/lgtoldes.egg-info/top_level.txt
