@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import pandas as pd
+import numpy as np
 from importlib import resources
 
 def getStdTolVal(normSize, ITGrd, ITGrdDF):
@@ -16,3 +17,9 @@ class ITGrd:
     def getStdTolVal(self, normSize, ITGrd):
         StdTolVal = self.ITGrdDF[(normSize > self.ITGrdDF.lowerBound) & (normSize <= self.ITGrdDF.upperBound)].loc[:, ITGrd]
         return float(StdTolVal)
+
+    def getJntErr(self, normSize, ITGrd):
+        stdTolVal = self.getStdTolVal(normSize, ITGrd)
+        jntAngErr = (stdTolVal / normSize) * np.pi / 10.0
+        jntCl = stdTolVal / normSize
+        return (jntAngErr, jntCl)
