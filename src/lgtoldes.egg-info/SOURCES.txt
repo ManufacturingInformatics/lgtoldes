@@ -3,8 +3,12 @@ pyproject.toml
 setup.cfg
 setup.py
 src/lgtoldes/__init__.py
+src/lgtoldes/itgrade.py
 src/lgtoldes/module_demo.py
 src/lgtoldes.egg-info/PKG-INFO
 src/lgtoldes.egg-info/SOURCES.txt
 src/lgtoldes.egg-info/dependency_links.txt
+src/lgtoldes.egg-info/requires.txt
 src/lgtoldes.egg-info/top_level.txt
+src/lgtoldes.egg-info/zip-safe
+src/lgtoldes/data/__init__.py
