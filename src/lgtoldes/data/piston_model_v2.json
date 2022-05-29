@@ -1,0 +1,21 @@
+{
+    "name": "Piston Model",
+    "itgrade": "IT2",
+    "simtime": 100,
+    "errgeneration": "manual",
+    "nodes": {
+        "A": {"type": "fixed", "coord": [0, 0, 0]},
+        "B": {"type": "fixed", "coord": [0, 0, -0.4]},
+        "C": {"type": "doublejoint", "coord": [0, 0, -25.5]},
+        "D": {"type": "joint", "coord": [0, 0, -146.5]},
+        "E": {"type": "joint", "coord": [0, -48, -186]}
+    },
+    "frtype": "plane",
+    "frrefpoint": "A",
+    "tolerancechain": [
+        {"node": "B", "nextnode": "C"},
+        {"node": "C", "nextnode": "D"},
+        {"node": "D", "nextnode": "E"},
+        {"node": "E", "nextnode": "A"}
+    ]
+}

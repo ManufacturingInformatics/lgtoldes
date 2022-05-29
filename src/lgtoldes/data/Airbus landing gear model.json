@@ -1,0 +1,23 @@
+{
+    "name": "Airbus Landing Gear Model",
+    "itgrade": "IT2",
+    "simtime": 100000,
+    "errgeneration": "auto",
+    "nodes": {
+        "W": {"type": "fixed", "coord": [1170.86, 3898.16, 52.04]},
+        "Pu": {"type": "joint", "coord": [2028.06, 4119.38, 207.98]},
+        "A": {"type": "fixed", "coord": [2002.84, 3969.44, -1.63]},
+        "B": {"type": "fixed", "coord": [1917.50, 4756.84, 69.15]},
+        "C": {"type": "fixed", "coord": [1926.96, 4669.56, 61.30]},
+        "D": {"type": "fixed", "coord": [1985.19, 4132.26, 13.01]},
+        "Eu": {"type": "fixed", "coord": [-894.77, 4498.98, -426.81]}
+    },
+    "frtype": "point",
+    "frrefpoint": "Eu",
+    "tolerancechain": [
+        {"node": "Eu", "nextnode": "C"},
+        {"node": "C", "nextnode": "D"},
+        {"node": "D", "nextnode": "Pu"},
+        {"node": "Pu", "nextnode": "W"}
+    ]
+}

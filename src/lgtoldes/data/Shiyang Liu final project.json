@@ -1,0 +1,29 @@
+{
+    "name": "Landing Gear Door Fairing Model",
+    "itgrade": "IT2",
+    "simtime": 100,
+    "errgeneration": "auto",
+    "nodes": {
+        "A": {"type": "fixed", "coord": [0, 0, 0]},
+        "B": {"type": "fixed", "coord": [117, 0, 0]},
+        "C": {"type": "joint", "coord": [117, 0, -150]},
+        "D": {"type": "joint", "coord": [476.25, 0, -112.46]},
+        "E": {"type": "fixed", "coord": [0, 0, -267]},
+        "F": {"type": "fixed", "coord": [476.25, 0, -267]},
+        "G": {"type": "fixed", "coord": [572.05, 0, -267]},
+        "H": {"type": "fixed", "coord": [1144.1, 0, -267]},
+        "I": {"type": "fixed", "coord": [1144.1, 0, -267]},
+        "J": {"type": "fixed", "coord": [572.05, 0, -287]},
+        "K": {"type": "fixed", "coord": [572.05, 0, -287]}
+    },
+    "frtype": "plane",
+    "frrefpoint": "K",
+    "tolerancechain": [
+        {"node": "J", "nextnode": "G"},
+        {"node": "G", "nextnode": "F"},
+        {"node": "F", "nextnode": "D"},
+        {"node": "D", "nextnode": "C"},
+        {"node": "C", "nextnode": "B"},
+        {"node": "B", "nextnode": "A"}
+    ]
+}
