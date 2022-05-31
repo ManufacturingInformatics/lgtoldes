@@ -23,3 +23,8 @@ class ITGrd:
         jntAngErr = (stdTolVal / normSize) * np.pi / 10.0
         jntCl = stdTolVal / normSize
         return (jntAngErr, jntCl)
+
+class JTModel(object):
+    def __init__(self, json_val):
+        self.val = json_val
+        self.feNum = self.val.tolerancechain
