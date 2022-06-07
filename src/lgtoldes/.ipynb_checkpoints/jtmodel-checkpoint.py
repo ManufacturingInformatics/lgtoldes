@@ -57,10 +57,8 @@ class JTModelKinematic(object):
             else:
                 raise Exception("Invalid node type: %s" % nodetype)
             
-        # self.jMat = [None] * self.matNum
-        # self.tMat = [None] * self.matNum
-        self.jMat = np.zeros((self.matNum, 6, 6), dtype=np.float32)
-        self.tMat = np.zeros((self.matNum, 6), dtype=np.float32)
+        self.jMat = [None] * self.matNum
+        self.tMat = [None] * self.matNum
 
     def _setup_jacobian_(self) -> None:                    
         # Jacobian matrix
@@ -85,21 +83,15 @@ class JTModelKinematic(object):
             nodetype = self.jti['nodes'][nodename]['type']
 
             if nodetype == 'fixed':
-                # self.jMat[matIndex] = jMatTemp
-                self.jMat[matIndex,:,:] = jMatTemp
+                self.jMat[matIndex] = jMatTemp
             elif nodetype == 'joint':
-                # self.jMat[matIndex] = jMatTemp
-                # self.jMat[matIndex + 1] = jMatTemp
-                self.jMat[matIndex, :, :] = jMatTemp
-                self.jMat[matIndex + 1, :, :] = jMatTemp
+                self.jMat[matIndex] = jMatTemp
+                self.jMat[matIndex + 1] = jMatTemp
                 matIndex = matIndex + 2
             elif nodetype == 'doublejoint':
-                # self.jMat[matIndex] = jMatTemp
-                # self.jMat[matIndex + 1] = jMatTemp
-                # self.jMat[matIndex + 2] = jMatTemp
-                self.jMat[matIndex, :, :] = jMatTemp
-                self.jMat[matIndex + 1, :, :] = jMatTemp
-                self.jMat[matIndex + 2, :, :] = jMatTemp
+                self.jMat[matIndex] = jMatTemp
+                self.jMat[matIndex + 1] = jMatTemp
+                self.jMat[matIndex + 2] = jMatTemp
                 matIndex = matIndex + 3
             else:
                 raise Exception("Invalid node type: %s" % nodetype)
@@ -128,8 +120,8 @@ class JTModelKinematic(object):
                 raise Exception("Invalid error generation type: %s" % self.jti['errgeneration'])
             
             for j in range(self.matNum): # check start value
-                self.feStore[j, : ,i] = np.matmul(self.jMat[j,:,:], self.tMat[j,:])
-                self.frStore[:, i] = self.frStore[:, i] + self.feStore[j, :, i]
+                self.feStore[j, 0:5 ,i] = np.matmul(self.jMat[j], self.tMat[j])
+                self.frStore[0:5, i] = self.frStore[0:5, i] + self.feStore[j, 0:5, i]
             
 
     def _one_simulation_run_(self):
@@ -180,29 +172,28 @@ class JTModelKinematic(object):
                 raise Exception("Invalid node type: %s" % nodetype)
                 
     def data_analysis(self):
-        # feMaxDiff = zeros(6, matNum);
-        # feErrDist = zeros(6, matNum);
-        # frErrDist = zeros(1, matNum);
-        # for i = 1:6
-        #     for j = 1:matNum
-        #         feMaxDiff(i, j) = max(feStore{j}(i, :)) - min(feStore{j}(i, :));
-        #     end
-        # end
+        feMaxDiff = zeros(6, matNum);
+        feErrDist = zeros(6, matNum);
+        frErrDist = zeros(1, matNum);
+        for i = 1:6
+            for j = 1:matNum
+                feMaxDiff(i, j) = max(feStore{j}(i, :)) - min(feStore{j}(i, :));
+            end
+        end
 
-        # for i = 1:6
-        #     feErrDist(i, :) = feMaxDiff(i, :) / sum(feMaxDiff(i, :));
-        # end
+        for i = 1:6
+            feErrDist(i, :) = feMaxDiff(i, :) / sum(feMaxDiff(i, :));
+        end
 
-        # switch val.frtype
-        #     case 'point'
-        #         for i = 1:3
-        #             frErrDist = frErrDist + feErrDist(i, :);
-        #         end
-        #         frErrDist = frErrDist / 3;
-        #     case 'plane'
-        #         for i = 1:6
-        #             frErrDist = frErrDist + feErrDist(i, :);
-        #         end
-        #         frErrDist = frErrDist / 6;
-        # end
-        pass
+        switch val.frtype
+            case 'point'
+                for i = 1:3
+                    frErrDist = frErrDist + feErrDist(i, :);
+                end
+                frErrDist = frErrDist / 3;
+            case 'plane'
+                for i = 1:6
+                    frErrDist = frErrDist + feErrDist(i, :);
+                end
+                frErrDist = frErrDist / 6;
+        end
