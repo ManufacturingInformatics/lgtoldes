@@ -1,18 +1,10 @@
 name: cadquery
 channels:
-  - projectchrono
-  - cadquery
   - conda-forge
   - defaults
 dependencies:
-  - cadquery=master
-  - cq-editor=master
-  - jupyterlab
-  - jupyterlab
-  - matplotlib
   - numpy
   - pandas
-  - pychrono
   - python=3.9
   - scipy
   - setuptools
